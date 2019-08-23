@@ -79,20 +79,25 @@ class Module extends PrismaModule {
 
   getResolvers() {
 
-    const resolvers = super.getResolvers();
+    const {
+      // Query,
+      // Mutation,
+      // Subscription,
+      ...other
+    } = super.getResolvers();
 
-
-    Object.assign(resolvers.Query, this.Query);
-
-    Object.assign(resolvers.Mutation, this.Mutation);
-
-    Object.assign(resolvers.Subscription, this.Subscription);
-
-
-    Object.assign(resolvers, {
-    });
-
-    return resolvers;
+    return {
+      ...other,
+      // Query: {
+      //   ...Query,
+      // },
+      // Mutation: {
+      //   ...Mutation,
+      // },
+      // Subscription: {
+      //   ...Subscription,
+      // },
+    };
   }
 
 
