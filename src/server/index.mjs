@@ -1,16 +1,50 @@
 
-import startServer from "@prisma-cms/server";
 
-import Module from "../";
+import {
+  modifyArgs,
+  PrismaCmsServer,
+} from "@prisma-cms/server";
 
+import CoreModule from "../";
 
-const module = new Module({
+const coreModule = new CoreModule({
 });
 
-const resolvers = module.getResolvers();
+const resolvers = coreModule.getResolvers();
+
+
+class PrismaCmsServerCustom extends PrismaCmsServer {
+
+  // getServer() {
+  //   const server = super.getServer();
+  //   return server;
+  // }
+
+
+  // processRequest(request) {
+
+  //   return super.processRequest({
+  //     ...request,
+  //   });
+  // }
+
+}
+
+
+const startServer = function (options) {
+
+  return new PrismaCmsServerCustom(options).startServer();
+
+}
 
 
 startServer({
   typeDefs: 'src/schema/generated/api.graphql',
   resolvers,
+  contextOptions: {
+    modifyArgs,
+    resolvers,
+  },
 });
+
+
