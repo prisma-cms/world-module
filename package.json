@@ -43,5 +43,13 @@
     "svg",
     "world",
     "maps"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prisma-cms/world-module.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prisma-cms/world-module/issues"
+  },
+  "homepage": "https://github.com/prisma-cms/world-module#readme"
 }
