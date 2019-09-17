@@ -1,0 +1,11 @@
+
+type GeoMap{
+  id: ID! @unique
+  name: String! @unique
+  viewBox: String!
+  x_min: Float!
+  x_max: Float!
+  y_min: Float!
+  y_max: Float!
+  GeoObjects: [GeoObject!]! @relation(name: "GeoObjects")
+}

@@ -1,0 +1,44 @@
+
+type Query {
+
+  osme (
+
+    """
+      Получаем только с координатами. @turf/simplify ломается при обработке без координат
+    """
+    with_coordinates: Boolean = true
+
+    where: OsmeRegionWhereInput!
+  ): OsmeGeoData!
+}
+
+input OsmeRegionWhereInput {
+  name: String
+  osmId_not_in: [ID!]
+}
+
+
+type OsmeGeoData {
+  type: String!
+  features: [OsmeFeature!]!
+  metaData: Json!
+}
+
+
+type OsmeFeature {
+  type: String!
+  geometry: Json!
+  properties: Json!
+}
+
+# type OsmeRegion {
+#   # meta: OsmeRegionMeta!
+#   meta: Json!
+#   path: Json!
+#   regions: 
+#   _copyright: Json
+# }
+
+# type OsmeRegionMeta {
+
+# }

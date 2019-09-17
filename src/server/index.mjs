@@ -5,12 +5,18 @@ import {
   PrismaCmsServer,
 } from "@prisma-cms/server";
 
-import CoreModule from "../";
+import CoreModule, {
+  Modules,
+} from "../";
+
 
 const coreModule = new CoreModule({
+  modules: Modules,
 });
 
 const resolvers = coreModule.getResolvers();
+
+// console.log("resolvers", resolvers);
 
 
 class PrismaCmsServerCustom extends PrismaCmsServer {

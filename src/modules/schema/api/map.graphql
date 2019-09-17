@@ -1,0 +1,40 @@
+
+type Query {
+
+  """
+    Список доступных карт
+  """
+  maps(
+    where: MapWhereInput
+  ): [Map!]!
+
+  """
+    Карта мира, страны или отдельного региона
+  """
+  map(
+    where: MapWhereUniqueInput!
+  ): Map
+}
+
+
+type Map {
+
+  """
+    Unique name
+  """
+  name: String!
+
+  """
+    Svg map data
+  """
+  svg: Json!
+}
+
+input MapWhereInput {
+  name: String
+  name_in: [String!]
+}
+
+input MapWhereUniqueInput {
+  name: String!
+}

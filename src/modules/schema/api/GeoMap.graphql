@@ -1,0 +1,23 @@
+
+
+type Mutation {
+  
+  createGeoMapProcessor(
+    data: GeoMapCreateInput!
+  ): GeoMapResponse!
+
+  updateGeoMapProcessor(
+    data: GeoMapUpdateInput!
+    where: GeoMapWhereUniqueInput!
+  ): GeoMapResponse!
+
+}
+
+
+type GeoMapResponse {
+  success: Boolean!
+  message: String
+  errors: [Error!]!
+  data: GeoMap
+}
+

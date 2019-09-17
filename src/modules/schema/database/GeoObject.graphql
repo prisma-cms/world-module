@@ -1,0 +1,13 @@
+
+type GeoObject {
+  id: ID! @unique
+  key: ID! @unique
+  name: String
+
+  """
+    Svg path data
+  """
+  d: String
+
+  GeoMap: GeoMap! @relation(name: "GeoObjects")
+}

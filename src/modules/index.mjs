@@ -17,6 +17,13 @@ const { createWriteStream, unlinkSync } = fs;
 
 const { fileLoader, mergeTypes } = MergeSchema
 
+import osme from 'osme';
+
+const {
+  default: osmeRegions,
+} = osme;
+
+// console.log("osmeRegions", osmeRegions);
 
 
 class Module extends PrismaModule {
@@ -77,20 +84,77 @@ class Module extends PrismaModule {
   }
 
 
+  async osme(source, args, ctx, info) {
+
+    const {
+      with_coordinates,
+      where: {
+        name,
+        osmId_not_in,
+      },
+    } = args;
+
+    const result = osmeRegions.geoJSON(name, { lang: "ru", quality: 0 })
+      .then((data) => {
+        // var collection = osmeRegions.toYandex(data);
+        // osmeRegions.geoJSON("world", {lang: "ru", quality: 0}, function (data) { 
+        //....
+
+        // console.log("osme data", data);
+
+        let {
+          features,
+          ...other
+        } = data;
+
+
+        if (with_coordinates) {
+          // features = features.filter(n => (
+          //   n.geometry.coordinates && n.geometry.coordinates.length
+          //   && n.geometry.path && n.geometry.path.length
+          //   && n.geometry.fixedPoints && n.geometry.fixedPoints.length
+          // ));
+        }
+
+
+        if (osmId_not_in && osmId_not_in.length) {
+          features = features.filter(n => osmId_not_in.indexOf(n.properties.osmId) === -1);
+        }
+
+
+        // console.log("features", features);
+
+        // const empty = features.find(n => !n.geometry.coordinates || !n.geometry.coordinates.length);
+
+        // console.log("features empty", empty);
+
+        // features = features.splice(0, 3);
+
+        return {
+          ...other,
+          features,
+        };
+      });
+
+    return result;
+  }
+
+
   getResolvers() {
 
     const {
-      // Query,
+      Query,
       // Mutation,
-      // Subscription,
+      Subscription,
       ...other
     } = super.getResolvers();
 
     return {
       ...other,
-      // Query: {
-      //   ...Query,
-      // },
+      Query: {
+        ...Query,
+        osme: this.osme,
+      },
       // Mutation: {
       //   ...Mutation,
       // },
